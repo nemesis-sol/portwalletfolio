@@ -1,6 +1,3 @@
-bash
-
-cat > /home/claude/portfolio/script.js << 'SCRIPTEOF'
 const AppState = {
     currentLang: 'en',
     currentTheme: 'dark',
@@ -759,5 +756,3 @@ window.Animations = {
     initParallax,
     initSmoothScroll
 };
-SCRIPTEOF
-echo "done"
