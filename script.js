@@ -1,3 +1,6 @@
+bash
+
+cat > /home/claude/portfolio/script.js << 'SCRIPTEOF'
 const AppState = {
     currentLang: 'en',
     currentTheme: 'dark',
@@ -520,38 +523,27 @@ function initSkillAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const skillItem = entry.target;
-                const progressBar = skillItem.querySelector('.skill-progress');
-                const percentElement = skillItem.querySelector('.skill-percent');
-                const percent = parseInt(skillItem.getAttribute('data-percent') || 0);
-                
-                if (progressBar && typeof anime !== 'undefined') {
+                if (typeof anime !== 'undefined') {
                     anime({
-                        targets: progressBar,
-                        width: ['0%', percent + '%'],
-                        duration: 2000,
-                        easing: 'easeOutExpo',
-                        delay: 300
+                        targets: skillItem,
+                        opacity: [0, 1],
+                        translateY: [15, 0],
+                        scale: [0.9, 1],
+                        duration: 600,
+                        easing: 'easeOutExpo'
                     });
-                    
-                    anime({
-                        targets: { value: 0 },
-                        value: percent,
-                        duration: 2000,
-                        easing: 'easeOutExpo',
-                        delay: 300,
-                        update: function(anim) {
-                            if (percentElement) {
-                                percentElement.textContent = Math.floor(anim.animatables[0].target.value) + '%';
-                            }
-                        }
-                    });
+                } else {
+                    skillItem.style.opacity = 1;
                 }
                 observer.unobserve(skillItem);
             }
         });
     }, { threshold: 0.5 });
     
-    skillItems.forEach(item => observer.observe(item));
+    skillItems.forEach(item => {
+        item.style.opacity = 0;
+        observer.observe(item);
+    });
 }
 
 function initTimelineAnimations() {
@@ -767,3 +759,5 @@ window.Animations = {
     initParallax,
     initSmoothScroll
 };
+SCRIPTEOF
+echo "done"
